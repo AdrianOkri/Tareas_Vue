@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Tareas Vue</title>
+	<link rel="icon" type="img/png" href="logo.png">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+	<!--Vue.js component-->
+	<div class="container text-center col-lg-7">
+		<div id="taskApp">
+			<img v-bind:src="logo" width="15%">
+			<h1>{{ talksApp }}</h1>	
+			
+			<form v-on:submit="agregarTarea" class="form-control">
+				<input type="text" v-model="tareas.titulo">
+				<input type="submit" value="Agregar Tarea" class="btn btn-success">
+			</form>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Hecho!</th>
+						<th>Tarea</th>
+						<th>Eliminar</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="tarea in tareas">
+						<td>
+							<input type="checkbox" v-model="tarea.hecho">
+						</td>
+						<td>
+							{{ tarea.titulo }}
+						</td>
+						<td>
+							<button v-on:click="deleteT(tarea)" class="btn btn-danger">Delete</button>
+						</td>
+					</tr>
+				</tbody>
+				<tbody>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script>
+		new Vue({
+			el: '#taskApp',
+			data: {
+				logo: './logo.png',
+				talksApp: 'Tareas Vue.js',
+				tareas: [
+					{
+						titulo: 'tarea 1',
+						hecho: false
+					},
+					{
+						titulo: 'tarea 2',
+						hecho: false
+					},
+					{
+						titulo: 'tarea 3',
+						hecho: false
+					}
+				]
+			},
+			methods: {
+				deleteT: function(tarea) {
+					var indice = this.tareas.indexOf(tarea)
+					this.tareas.splice(indice, 1)
+				},
+				agregarTarea: function(ev) {
+					ev.preventDefault()
+					this.tareas.push({
+						titulo: this.tareas.titulo,	
+						hecho: false
+					})
+					this.tareas.titulo = ''
+				}
+			}
+		})
+	</script>
+</body>
+</html>
